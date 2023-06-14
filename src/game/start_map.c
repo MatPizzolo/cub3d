@@ -46,31 +46,8 @@ int	start_map(t_global *vars, char	*argv)
 	vars->win = mlx_new_window(vars->mlx, SIZE_X, SIZE_Y, "Cub3D");
 	get_map(vars, argv);
 	get_positions(vars);
-	//background(vars);
 	start_keys(vars);
-	int pos[2];
-	pos[0] = 500;
-	pos[1] = 500;
-	for (int i = 0; i<50; i++)
-	{
-		render_wall_col(vars,i,50 - i,pos);
-		pos[0]++;
-	}
-	if (!put_map(vars))
-		return (0);
 	if (!initialize_key_hooks(vars))
 		return (0);
-	t_vect cor1 = set_vect(1,1);
-	t_vect cor2 = set_vect(2, 1);
-	t_image tmp;
-	
-	
-	//tmp.img = mlx_xpm_file_to_image(vars->mlx, "/Users/amejia/cub3d/assets/wall_NO.xpm", &tmp.width, &tmp.height);
-	//tmp.addr = mlx_get_data_addr(&tmp.img, &tmp.bits_per_pixel, &tmp.line_length, &tmp.endian);
-	
-	
-	return (0);
-
-
 	return (1);
 }
