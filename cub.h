@@ -14,7 +14,8 @@
 # define KH_RK 124
 # define KH_SPACE 49
 # define FOV 3.141592653589793238/4
-# define STEP_S 0.02
+# define SIZEC 300
+# define D_TO_SCREEN 2317.64502 // SIZE_X /2 / tanf(FOV/2)
 
 # include "./gnl/get_next_line.h"
 # include "./libft/libft.h"
@@ -87,6 +88,7 @@ typedef struct s_wall_rend{
 	int		column;
 	int		size;
 	int		position[2];
+	t_image *img_dst;
 	t_image	*n_wall;
 }	t_wall_rend;
 
@@ -103,6 +105,7 @@ t_vect	neg_v(t_vect vec);
 t_vect	add_v(t_vect v1, t_vect v2);
 t_vect	sub_v(t_vect v1, t_vect v2);
 t_vect	f_x_v(float f, t_vect v);
+float	vec_angle(t_vect base, t_vect other);
 
 /* parser */
 int		check_args(int argc, char *file);
@@ -123,7 +126,7 @@ void	my_mlx_pixel_put(t_image *data, int x, int y, int color);
 int		create_trgb(int t, int r, int g, int b);
 
 /* background */
-void	background(t_global *vars);
+void	draw_background(t_global *vars, t_image *img);
 
 /* minimap */
 int		put_minimap(t_global *vars);
@@ -149,9 +152,12 @@ void	move_player(int move_to, t_global *vars);
 void	move_view(int view_to, t_global *vars);
 
 /* render walls */
-//void    render_wall_col(t_global *vars, t_wall_rend *p);
-void    render_wall_col(t_global *vars, int column, int size, int *position);
-void render_wall(t_global *vars,t_vect cor1, t_vect cor2, t_image *n_wall);
-
+//void    render_wall_col(t_global *vars, int column, int size, int *position, 
+//	t_image *img);
+void	render_wall_col(t_global *vars, t_wall_rend *p);
+void	mega_wall_render(t_global *vars, t_image *img);
+void	render_wall_col_setup(t_global *vars, int *ct, t_image *img, 
+	t_vect intersect);
+t_vect	calc_ray_intersect(t_global *vars, int hor_pix, int *x_y);
 
 #endif

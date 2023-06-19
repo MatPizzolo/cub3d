@@ -1,29 +1,60 @@
 
 #include "../../cub.h"
 
-void endian1_color_asign(t_color *color, t_wall_rend *p, int y, float ratio)
+void	endian1_color_asign(t_color *color, t_wall_rend *p, int y, float rat)
 {
-	color->t = (int)p->n_wall->addr[((int)(y*ratio) * p->n_wall->line_length) 
-		+ p->column ];
-	color->r = (int)p->n_wall->addr[((int)(y*ratio) * p->n_wall->line_length) 
+	color->t = (int)p->n_wall->addr[((int)(y * rat) * (p->n_wall->line_length))
+		+ p->column];
+	color->r = (int)p->n_wall->addr[((int)(y * rat) * (p->n_wall->line_length))
 		+ p->column + 1];
-	color->g = (int)p->n_wall->addr[((int)(y*ratio) * p->n_wall->line_length) 
+	color->g = (int)p->n_wall->addr[((int)(y * rat) * (p->n_wall->line_length))
 		+ p->column+ 2];
-	color->b = (int)p->n_wall->addr[((int)(y*ratio) * p->n_wall->line_length) 
-		+ p->column +  3];
+	color->b = (int)p->n_wall->addr[((int)(y * rat) * (p->n_wall->line_length))
+		+ p->column + 3];
 }
 
-
-void else_color_asign(t_color *color, t_wall_rend *p, int y, float ratio)
+void	else_color_asign(t_color *color, t_wall_rend *p, int y, float ratio)
 {
-	color->t = (unsigned char)p->n_wall->addr[((int)(y *ratio) * p->n_wall->line_length) + 4 * p->column +  3];
-	color->r = (unsigned char)p->n_wall->addr[((int)(y *ratio) * p->n_wall->line_length) + 4 * p->column +  2];
-	color->g = (unsigned char)p->n_wall->addr[((int)(y *ratio) * p->n_wall->line_length) + 4 * p->column +  1];
-	color->b = (unsigned char)p->n_wall->addr[((int)(y *ratio) * p->n_wall->line_length) + 4 * p->column  ];
+	color->t = (unsigned char)p->n_wall->addr[((int)(y * ratio) 
+		* p->n_wall->line_length) + 4 * p->column +  3];
+	color->r = (unsigned char)p->n_wall->addr[((int)(y * ratio) 
+		* p->n_wall->line_length) + 4 * p->column +  2];
+	color->g = (unsigned char)p->n_wall->addr[((int)(y * ratio) 
+		* p->n_wall->line_length) + 4 * p->column +  1];
+	color->b = (unsigned char)p->n_wall->addr[((int)(y * ratio) 
+		* p->n_wall->line_length) + 4 * p->column  ];
 }
 
+void	render_wall_col(t_global *vars, t_wall_rend *p)
+{
+	t_color	color;
+	int y;
+	float ratio;
 
-void    render_wall_col(t_global *vars, int column, int size, int *position)
+	ratio = (float)p->n_wall->height/p->size;
+   	y = 0;
+	while (y < p->size)
+	{
+		if (p->position[0] < 0 || p->position[0] >= SIZE_X)
+			break ;
+		if (p->position[1] + y < 0 || p->position[1] + y >= SIZE_Y)
+		{
+			y++;
+			continue;
+		}
+		if (p->n_wall->endian == 1)
+			endian1_color_asign(&color, p, y ,ratio);
+		else
+			else_color_asign(&color, p, y, ratio);
+		color.trgb = create_trgb(color.t, color.r, color.g, color.b);
+		my_mlx_pixel_put(p->img_dst, p->position[0], p->position[1] + y,
+			color.trgb);
+		y++;
+	}
+}
+
+void    render_wall_col_old(t_global *vars, int column, int size, int *position, 
+	t_image *img)
 {
 	t_image	n_wall;
 	t_image	mlx_n_image;
@@ -41,94 +72,48 @@ void    render_wall_col(t_global *vars, int column, int size, int *position)
 	n_wall.addr = mlx_get_data_addr(n_wall.img, &n_wall.bits_per_pixel, &n_wall.line_length, &n_wall.endian);
 	p.n_wall = &n_wall;
 	ratio = (float)n_wall.height/size;
-	mlx_n_image.img = mlx_new_image(vars->mlx, 1, size);
-	mlx_n_image.addr = mlx_get_data_addr(mlx_n_image.img, &mlx_n_image.bits_per_pixel, &mlx_n_image.line_length, &mlx_n_image.endian);
    	y = 0;
 	while (y < size)
 	{
+		if (position[0] < 0 || position[0] >= SIZE_X)
+			break ;
+		if (position[1] + y < 0 || position[1] + y >= SIZE_Y)
+		{
+			y++;
+			continue;
+		}
 		if (n_wall.endian == 1)
 			endian1_color_asign(&color, &p, y ,ratio);
 		else
 			else_color_asign(&color, &p, y, ratio);
 		color.trgb = create_trgb(color.t, color.r, color.g, color.b);
-		my_mlx_pixel_put(&mlx_n_image, 0, y, color.trgb);
+		my_mlx_pixel_put(img, position[0], position[1] + y, color.trgb);
 		y++;
 	}
-	mlx_put_image_to_window(vars->mlx, vars->win, mlx_n_image.img, position[0], position[1]);
 }
 
-
-#if 0
-
-void    render_wall_col_v2(t_global *vars, t_wall_rend p)
+// ct is ct[0], x_y es ct[1], por is ct[2], pos[0] is ct[3], pos[1] is ct[4]
+void mega_wall_render(t_global *vars, t_image *img)
 {
-	t_image	n_wall;
-	t_image	mlx_n_image;
-	t_color	color;
-	int y;
-	float ratio;
-	t_wall_rend p;
-
-	p.column = column;
-	p.size = size;
-	p.position[0] = position[0];
-	p.position[1] = position[1];
-
-	n_wall.img = mlx_xpm_file_to_image(vars->mlx, vars->NO_texture->file, &n_wall.width, &n_wall.height);
-	n_wall.addr = mlx_get_data_addr(n_wall.img, &n_wall.bits_per_pixel, &n_wall.line_length, &n_wall.endian);
-	p.n_wall = &n_wall;
-	ratio = (float)n_wall.height/size;
-	mlx_n_image.img = mlx_new_image(vars->mlx, 1, size);
-	mlx_n_image.addr = mlx_get_data_addr(mlx_n_image.img, &mlx_n_image.bits_per_pixel, &mlx_n_image.line_length, &mlx_n_image.endian);
-   	y = 0;
-	while (y < size)
-	{
-		if (n_wall.endian == 1)
-			endian1_color_asign(&color, &p, y ,ratio);
-		else
-			else_color_asign(&color, &p, y, ratio);
-		color.trgb = create_trgb(color.t, color.r, color.g, color.b);
-		my_mlx_pixel_put(&mlx_n_image, 0, y, color.trgb);
-		y++;
-	}
-	mlx_put_image_to_window(vars->mlx, vars->win, mlx_n_image.img, position[0], position[1]);
-}
-
-#endif
-
-// wall contains director in 0, current position in 1 and direct ffrom player in 2
-void render_wall(t_global *vars,t_vect cor1, t_vect cor2, t_image *n_wall)
-{
-	t_vect wall[3];
-	// float		walldir[2];
-	// float		wallpos[2];
-	float		current;
-	t_wall_rend	p;
-	// float		vector2me[2];
-	int count = 0;
-	float theta;
-
-	// neg_v(cor1);
-	// add_v(cor2, cor1, walldir);
-	wall[0] = sub_v(cor2, cor1);
-	current = 0;
-	while (current < 1)
-	{
-		wall[1] = add_v(cor1, f_x_v(current, wall[0]));
-		// wallpos[0] = cor1[0] + current * walldir[0];
-		// wallpos[1] = cor1[1] + current * walldir[1];
-		wall[2] = sub_v(wall[1],vars->char_pos);		
-		// vector2me[0] = walldir[0] - vars->char_pos.y;
-		// vector2me[1] = walldir[1] - vars->char_pos.x;
-		theta =acosf(dot_prod(wall[2], vars->char_facing) / size_vect(wall[2]));
-		p.column = count;
-		
-		p.position[0] =  960 + sinf(theta)/sin(FOV/2) * 960;
-		p.position[1] = 540;
-		p.n_wall = n_wall;
-		//render_wall_col(vars,&p);
-		current += STEP_S;
-		count ++;
-	}
+	int ct[5];
+	t_vect intersect;
 	
+	ft_bzero(ct, 5);
+	while (ct[0] < SIZE_X)
+	{
+		intersect = calc_ray_intersect(vars, ct[0], &ct[1]);
+		if (dist_vec(intersect, set_vect(-1,-1)) != 0)
+		{
+			ct[3] = ct[0];
+			ct[4] = SIZE_Y / 2 - 500 / (dist_vec(vars->char_pos, 
+				intersect) + 0.1);
+			if (ct[1] == 0)
+				ct[2] = (int)(50 * fmodf(intersect.x,1.0f));
+			else if (ct[1] == 1)
+				ct[2] = (int)(50 * fmodf(intersect.y,1.0f));
+			if (ct[1] != -1)
+				render_wall_col_setup(vars, ct, img, intersect);
+		}
+		ct[0]++;
+	}
 }

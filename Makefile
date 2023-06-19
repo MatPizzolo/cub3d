@@ -9,16 +9,21 @@ LIBFT_DIR = ./libft
 MLX_DIR = ./mlx
 
 SRCS = ./gnl/get_next_line.c ./gnl/get_next_line_utils.c \
-	$(SRCS_DIR)/parser/check_args.c $(SRCS_DIR)/parser/check_map.c $(SRCS_DIR)/parser/get_positions.c $(SRCS_DIR)/parser/get_map.c \
-	$(SRCS_DIR)/main.c $(SRCS_DIR)/game/start_map.c $(SRCS_DIR)/game/key_hooks.c $(SRCS_DIR)/game/mlx_utils.c $(SRCS_DIR)/game/background.c \
-	$(SRCS_DIR)/game/minimap/map.c $(SRCS_DIR)/game/minimap/minimap-utils.c $(SRCS_DIR)/game/render_walls.c $(SRCS_DIR)/game/moves_player.c \
-	$(SRCS_DIR)/vector_math/distances.c $(SRCS_DIR)/vector_math/distances_2.c $(SRCS_DIR)/vector_math/rotation.c
+	$(SRCS_DIR)/parser/check_args.c $(SRCS_DIR)/parser/check_map.c \
+	$(SRCS_DIR)/parser/get_positions.c $(SRCS_DIR)/parser/get_map.c \
+	$(SRCS_DIR)/main.c $(SRCS_DIR)/game/start_map.c $(SRCS_DIR)/game/key_hooks.c\
+	$(SRCS_DIR)/game/mlx_utils.c $(SRCS_DIR)/game/background.c \
+	$(SRCS_DIR)/game/minimap/map.c $(SRCS_DIR)/game/minimap/minimap-utils.c \
+	$(SRCS_DIR)/game/render_walls.c $(SRCS_DIR)/game/moves_player.c \
+	$(SRCS_DIR)/game/ray_caster.c \
+	$(SRCS_DIR)/vector_math/distances.c $(SRCS_DIR)/vector_math/distances_2.c \
+	$(SRCS_DIR)/vector_math/rotation.c $(SRCS_DIR)/game/game_loop.c 
 
 
 OBJS = ${SRCS:.c=.o}
 
 CC = gcc
-CFLAGS = #-Wall -Wextra -g3 #-fsanitize=address #-Werror
+CFLAGS = -g #-fsanitize=address#-Wall -Wextra -g3 # #-Werror
 #CFLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
 
 MLX = $(MLX_DIR)/libmlx.a

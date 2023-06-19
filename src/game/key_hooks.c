@@ -84,33 +84,3 @@ int	key_released(int keycode, t_global *vars)
 		vars->keys->k_space = 0;
 	return (0);
 }
-
-int	game_loop(void *param)
-{
-	t_global	*vars;
-
-	vars = (t_global *)param;
-	key_actions(vars);
-	mouse_move(vars);
-	//background(vars);
-	
-	//inicio pruebas
-	int pos[2];
-	pos[0] = 500;
-	pos[1] = 500;
-	for (int i = 0; i<50; i++)
-	{
-		render_wall_col(vars,i,50 - i,pos);
-		pos[0]++;
-	}
-	
-
-	//fin pruebas
-	
-	if (!put_map(vars))
-		return (0);
-	return (0);
-}
-	
-
-
