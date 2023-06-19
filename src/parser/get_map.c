@@ -4,33 +4,39 @@
 void	get_textures(t_global *vars, int fd)
 {
 	char	*line;
-	t_image	*tmp;
+	t_image	*tmp_no;
+	t_image	*tmp_so;
+	t_image	*tmp_we;
+	t_image	*tmp_ea;
 	
 	line = get_next_line(fd);
 	if (line[0] == '\n')
 		line = get_next_line(fd);
 	while (line[0] != 'N')
 		line++;
-	tmp = (t_image *)malloc(sizeof(t_image));
-	tmp->file = ft_strtrim((line + 3), "\n");
-	tmp->img = mlx_xpm_file_to_image(vars->mlx, tmp->file, &tmp->width, &tmp->height);
-	// tmp->addr = mlx_get_data_addr(tmp->img, &tmp->bits_per_pixel, &tmp->line_length, &tmp->endian);
-	vars->no_texture = tmp;
+	tmp_no = (t_image *)malloc(sizeof(t_image));
+	tmp_no->file = ft_strtrim((line + 3), "\n");
+	tmp_no->img = mlx_xpm_file_to_image(vars->mlx, tmp_no->file, &tmp_no->width, &tmp_no->height);
+	tmp_no->addr = mlx_get_data_addr(tmp_no->img, &tmp_no->bits_per_pixel, &tmp_no->line_length, &tmp_no->endian);
+	vars->no_texture = tmp_no;
 	line = get_next_line(fd);
-	tmp->file = ft_strtrim((line + 3), "\n");
-	tmp->img = mlx_xpm_file_to_image(vars->mlx, tmp->file, &tmp->width, &tmp->height);
-	// tmp->addr = mlx_get_data_addr(tmp->img, &tmp->bits_per_pixel, &tmp->line_length, &tmp->endian);
-	vars->so_texture = tmp;
+	tmp_so = (t_image *)malloc(sizeof(t_image));
+	tmp_so->file = ft_strtrim((line + 3), "\n");
+	tmp_so->img = mlx_xpm_file_to_image(vars->mlx, tmp_so->file, &tmp_so->width, &tmp_so->height);
+	tmp_so->addr = mlx_get_data_addr(tmp_so->img, &tmp_so->bits_per_pixel, &tmp_so->line_length, &tmp_so->endian);
+	vars->so_texture = tmp_so;
 	line = get_next_line(fd);
-	tmp->file = ft_strtrim((line + 3), "\n");
-	tmp->img = mlx_xpm_file_to_image(vars->mlx, tmp->file, &tmp->width, &tmp->height);
-	// tmp->addr = mlx_get_data_addr(tmp->img, &tmp->bits_per_pixel, &tmp->line_length, &tmp->endian);
-	vars->we_texture = tmp;
+	tmp_we = (t_image *)malloc(sizeof(t_image));
+	tmp_we->file = ft_strtrim((line + 3), "\n");
+	tmp_we->img = mlx_xpm_file_to_image(vars->mlx, tmp_we->file, &tmp_we->width, &tmp_we->height);
+	tmp_we->addr = mlx_get_data_addr(tmp_we->img, &tmp_we->bits_per_pixel, &tmp_we->line_length, &tmp_we->endian);
+	vars->we_texture = tmp_we;
 	line = get_next_line(fd);
-	tmp->file = ft_strtrim((line + 3), "\n");
-	tmp->img = mlx_xpm_file_to_image(vars->mlx, tmp->file, &tmp->width, &tmp->height);
-	// tmp->addr = mlx_get_data_addr(tmp->img, &tmp->bits_per_pixel, &tmp->line_length, &tmp->endian);
-	vars->ea_texture = tmp;
+	tmp_ea = (t_image *)malloc(sizeof(t_image));
+	tmp_ea->file = ft_strtrim((line + 3), "\n");
+	tmp_ea->img = mlx_xpm_file_to_image(vars->mlx, tmp_ea->file, &tmp_ea->width, &tmp_ea->height);
+	tmp_ea->addr = mlx_get_data_addr(tmp_ea->img, &tmp_ea->bits_per_pixel, &tmp_ea->line_length, &tmp_ea->endian);
+	vars->ea_texture = tmp_ea;
 }
 
 void	get_colors(t_global *vars, int fd)
