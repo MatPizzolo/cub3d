@@ -104,10 +104,6 @@ t_vect	calc_ray_intersect(t_global *vars, int hor_pix, int *x_y)
 
 t_image *texture_selector(t_global *vars, t_vect intersect, int x_y)
 {
-	t_image tmp;
-
-	tmp.img = mlx_xpm_file_to_image(vars->mlx, "./assets/wall_SO.xpm", &tmp.width, &tmp.height);
-	tmp.addr = mlx_get_data_addr(tmp.img, &tmp.bits_per_pixel, &tmp.line_length, &tmp.endian);
 	if (!(x_y == 0 || x_y ==1))
 		return (NULL);
 	if (x_y == 0 && sub_v(intersect, vars->char_pos).x < 0)
@@ -132,14 +128,6 @@ void	render_wall_col_setup(t_global *vars, int *ct, t_image *img,
 	p.position[0] = ct[3];
 	p.position[1] = ct[4];
 	p.size = 1000 / (dist_vec(vars->char_pos, intersect) + 0.1);
-	// p.n_wall = texture_selector(vars, intersect, ct[1]);
-
-	t_image tmp;
-
-	tmp.img = mlx_xpm_file_to_image(vars->mlx, "./assets/wall_SO.xpm", &tmp.width, &tmp.height);
-	tmp.addr = mlx_get_data_addr(tmp.img, &tmp.bits_per_pixel, &tmp.line_length, &tmp.endian);
-
-	p.n_wall = &tmp;
-
+	p.n_wall = texture_selector(vars, intersect, ct[1]);
 	render_wall_col(vars, &p);
 }
