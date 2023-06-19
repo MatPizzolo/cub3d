@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   moves_player.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpizzolo <mpizzolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amejia <amejia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 20:58:42 by mpizzolo          #+#    #+#             */
-/*   Updated: 2023/06/14 03:41:04 by mpizzolo         ###   ########.fr       */
+/*   Updated: 2023/06/19 22:27:05 by amejia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	move_view(int view_to, t_global *vars)
 {
 	if (view_to == 2)
-		vars->char_facing = rotate_vector(vars->char_facing, -PI / 56);
+		vars->char_facing = rotate_vector(vars->char_facing, -PI / 28);
 	else if (view_to == 1)
-		vars->char_facing = rotate_vector(vars->char_facing, PI / 56);
+		vars->char_facing = rotate_vector(vars->char_facing, PI / 28);
 	put_map(vars);
 }
 
@@ -30,15 +30,15 @@ void	move_player(int move_to, t_global *vars)
 	tmp.y = vars->char_pos.y;
 	if (move_to == 1)
 		tmp = add_v(vars->char_pos,
-				f_x_v(0.025, rotate_vector(vars->char_facing, -PI / 2)));
+				f_x_v(0.05, rotate_vector(vars->char_facing, -PI / 2)));
 	else if (move_to == 2)
 		tmp = add_v(vars->char_pos,
-				f_x_v(0.025, rotate_vector(vars->char_facing, PI / 2)));
+				f_x_v(0.05, rotate_vector(vars->char_facing, PI / 2)));
 	else if (move_to == 3)
 		tmp = add_v(vars->char_pos,
-				f_x_v(0.025, rotate_vector(vars->char_facing, PI)));
+				f_x_v(0.05, rotate_vector(vars->char_facing, PI)));
 	else if (move_to == 4)
-		tmp = add_v(vars->char_pos, f_x_v(0.025, vars->char_facing));
+		tmp = add_v(vars->char_pos, f_x_v(0.05, vars->char_facing));
 	if (tmp.x < 0 || tmp.y < 0)
 		return ;
 	if (!vars->map[(int)roundf(tmp.y)][(int)roundf(tmp.x)])

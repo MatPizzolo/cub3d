@@ -67,7 +67,7 @@ void	put_ones_on_str(char *str, size_t len)
 	while (++i < len)
 	{
 		if (str[i] == ' ' || (str[i] != '0' && str[i] != 'N' && str[i] != 'S'
-				&& str[i] != 'E' && str[i] != 'W'))
+				&& str[i] != 'E' && str[i] != 'W' && str[i] != 'D'))
 			str[i] = '1';
 	}
 	str[i] = '\0';

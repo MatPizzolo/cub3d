@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_positions.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpizzolo <mpizzolo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amejia <amejia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 13:57:38 by mpizzolo          #+#    #+#             */
-/*   Updated: 2023/06/14 03:42:55 by mpizzolo         ###   ########.fr       */
+/*   Updated: 2023/06/19 17:59:41 by amejia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	*where_is_p(char **matrix)
 		x = 0;
 		while (matrix[y][x])
 		{
-			if (matrix[y][x] == 'N' || matrix[y][x] == 'E'
-					|| matrix[y][x] == 'S' || matrix[y][x] == 'W')
+			if (matrix[y][x] == 'N' || matrix[y][x] == 'E' || matrix[y][x] 
+				== 'S' || matrix[y][x] == 'W' ||  matrix[y][x] == 'D' )
 			{
 				p_pos[0] = y;
 				p_pos[1] = x;
@@ -37,7 +37,6 @@ int	*where_is_p(char **matrix)
 			}
 			x++;
 		}
-		x = 0;
 		y++;
 	}
 	return (p_pos);
@@ -65,6 +64,8 @@ void	put_facing(t_global *vars, char c)
 		vars->char_facing.y = 0;
 		vars->char_facing.x = -1;
 	}
+	else if (c == 'D')
+		vars->char_facing = set_vect(-1, 1);
 }
 
 void	get_positions(t_global *vars)
@@ -72,8 +73,9 @@ void	get_positions(t_global *vars)
 	int		*p_pos;
 
 	p_pos = where_is_p(vars->map);
+	put_facing(vars, vars->map[p_pos[0]][p_pos[1]]);
 	vars->char_pos.y = p_pos[0] + 0.5;
 	vars->char_pos.x = p_pos[1] + 0.5;
 	free(p_pos);
-	put_facing(vars, vars->map[(int)vars->char_pos.y][(int)vars->char_pos.x]);
 }
+

@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ray_caster.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amejia <amejia@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/19 23:20:37 by amejia            #+#    #+#             */
+/*   Updated: 2023/06/19 23:24:41 by amejia           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../cub.h"
 
-void ray_x_intersect(t_global *vars, t_vect *posib)
+//it[0] first value to check, it[1] direction
+void	ray_x_intersect(t_global *vars, t_vect *posib)
 {
 	int	it[2];
 
@@ -19,8 +32,7 @@ void ray_x_intersect(t_global *vars, t_vect *posib)
 		{
 			posib[0] = inter_lines(vars->char_pos, posib[2], set_vect(it[0], 0),
 					set_vect(0, 1));
-			if (posib[0].y > 0 && posib[0].y < vars->map_rows && vars->map[
-					(int)floorf(posib[0].y)][it[0] + (it[1] - 1) / 2] == '1')
+			if (check_x_quality(vars, posib, it))
 				break ;
 			it[0] += it[1];
 		}
@@ -47,10 +59,9 @@ void	ray_y_intersect(t_global *vars, t_vect *posib)
 		}
 		while (it[0] > 0 && it[0] < vars->map_rows)
 		{
-			posib[1] = inter_lines(vars->char_pos, vars->char_facing,
+			posib[1] = inter_lines(vars->char_pos, posib[2],
 					set_vect(0, it[0]), set_vect(1, 0));
-			if (posib[1].y > 0 && posib[1].y < vars->map_rows && vars->map[
-					it[0] + (it[1] - 1) / 2][(int)floorf(posib[1].x)] == '1')
+			if (check_y_quality(vars, posib, it))
 				break ;
 			it[0] += it[1];
 		}
@@ -101,33 +112,17 @@ t_vect	calc_ray_intersect(t_global *vars, int hor_pix, int *x_y)
 	return (choose_best_intersect(vars, posib, x_y));
 }
 
-
-t_image *texture_selector(t_global *vars, t_vect intersect, int x_y)
+t_image	*texture_selector(t_global *vars, t_vect intersect, int x_y)
 {
-	if (!(x_y == 0 || x_y ==1))
+	if (!(x_y == 0 || x_y == 1))
 		return (NULL);
 	if (x_y == 0 && sub_v(intersect, vars->char_pos).x < 0)
-		return (vars->we_texture); 
-	if (x_y == 0 && sub_v(intersect, vars->char_pos).x > 0)
-		return (vars->ea_texture); 
+		return (vars->we_texture);
+	if (x_y == 0 && sub_v(intersect, vars->char_pos).x >= 0)
+		return (vars->ea_texture);
 	if (x_y == 1 && sub_v(intersect, vars->char_pos).y < 0)
-		return (vars->no_texture); 
-	if (x_y == 1 && sub_v(intersect, vars->char_pos).y > 0)
-		return (vars->so_texture); 
+		return (vars->no_texture);
+	if (x_y == 1 && sub_v(intersect, vars->char_pos).y >= 0)
+		return (vars->so_texture);
 	return (NULL);
-	
-}
-
-void	render_wall_col_setup(t_global *vars, int *ct, t_image *img, 
-	t_vect intersect)
-{
-	t_wall_rend p;
-
-	p.column = ct[2];
-	p.img_dst = img;
-	p.position[0] = ct[3];
-	p.position[1] = ct[4];
-	p.size = 1000 / (dist_vec(vars->char_pos, intersect) + 0.1);
-	p.n_wall = texture_selector(vars, intersect, ct[1]);
-	render_wall_col(vars, &p);
 }
