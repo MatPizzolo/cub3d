@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_positions.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amejia <amejia@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mpizzolo <mpizzolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 13:57:38 by mpizzolo          #+#    #+#             */
-/*   Updated: 2023/06/19 17:59:41 by amejia           ###   ########.fr       */
+/*   Updated: 2023/06/20 16:31:04 by mpizzolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ int	*where_is_p(char **matrix)
 	p_pos = (int *)malloc(2 * sizeof(int));
 	if (!p_pos)
 		return (0);
-	y = 0;
+	y = -1;
 	x = 0;
-	while (matrix[y])
+	while (matrix[++y])
 	{
 		x = 0;
 		while (matrix[y][x])
 		{
-			if (matrix[y][x] == 'N' || matrix[y][x] == 'E' || matrix[y][x] 
-				== 'S' || matrix[y][x] == 'W' ||  matrix[y][x] == 'D' )
+			if (matrix[y][x] == 'N' || matrix[y][x] == 'E' || matrix[y][x]
+				== 'S' || matrix[y][x] == 'W')
 			{
 				p_pos[0] = y;
 				p_pos[1] = x;
@@ -37,7 +37,6 @@ int	*where_is_p(char **matrix)
 			}
 			x++;
 		}
-		y++;
 	}
 	return (p_pos);
 }
@@ -78,4 +77,3 @@ void	get_positions(t_global *vars)
 	vars->char_pos.x = p_pos[1] + 0.5;
 	free(p_pos);
 }
-

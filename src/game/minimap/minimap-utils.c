@@ -6,108 +6,77 @@
 /*   By: mpizzolo <mpizzolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 00:14:17 by mpizzolo          #+#    #+#             */
-/*   Updated: 2023/06/14 03:24:53 by mpizzolo         ###   ########.fr       */
+/*   Updated: 2023/06/20 22:00:57 by mpizzolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../cub.h"
 
-void	draw_circle(t_image *m_map, float centerX, float centerY, int radius, float scale, int color)
-{
-	float	scaled_centerx;
-	float	scaled_center_y;
-	float	x;
-	float	y;
-	float	radius_error;
-
-	scaled_centerx = centerX * scale;
-	scaled_center_y = centerY * scale;
-	x = radius;
-	y = 0;
-	radius_error = 1 - x;
-	while (x >= y)
-	{
-		my_mlx_pixel_put(m_map, scaled_centerx + x, scaled_center_y + y, color);
-		my_mlx_pixel_put(m_map, scaled_centerx + y, scaled_center_y + x, color);
-		my_mlx_pixel_put(m_map, scaled_centerx - y, scaled_center_y + x, color);
-		my_mlx_pixel_put(m_map, scaled_centerx - x, scaled_center_y + y, color);
-		my_mlx_pixel_put(m_map, scaled_centerx - x, scaled_center_y - y, color);
-		my_mlx_pixel_put(m_map, scaled_centerx - y, scaled_center_y - x, color);
-		my_mlx_pixel_put(m_map, scaled_centerx + y, scaled_center_y - x, color);
-		my_mlx_pixel_put(m_map, scaled_centerx + x, scaled_center_y - y, color);
-		y++;
-		if (radius_error < 0)
-		{
-			radius_error += 2 * y + 1;
-		}
-		else
-		{
-			x--;
-			radius_error += 2 * (y - x + 1);
-		}
-	}
-}
-
-void	draw_scaled_pixel(t_image *m_map, int x, int y, float scale, int color)
+void	draw_scaled_pixel(t_image *m_map, int x, int y, t_map map)
 {
 	int	dy;
 	int	dx;
 
 	dy = 0;
-	while (dy < scale)
+	while (dy < map.scale)
 	{
 		dx = 0;
-		while (dx < scale)
+		while (dx < map.scale)
 		{
-			my_mlx_pixel_put(m_map, x * scale + dx, y * scale + dy, color);
+			my_mlx_pixel_put(m_map, x * map.scale + dx, y * map.scale + dy, map.color);
 			dx++;
 		}
 		dy++;
 	}
 }
 
-void	draw_line(t_global *vars, t_image *m_map, float x, float y, float scale, int color)
+void	draw_player(t_global *vars, t_image *m_map, int map_width)
 {
-	float	dx;
-	float	to_x;
-	float	to_y;
+	t_vect	vect;
+	float	scale;
+	t_map	map_args;
 
-	dx = 0;
-	norm_vect(vars->char_facing);
-	to_x = vars->char_facing.x;
-	to_y = vars->char_facing.y;
-	while (dx < 12 && dx >= 0)
+	map_args.scale = vars->map_columns * 10 / map_width;
+	map_args.color = 0x0000FF;
+	vect.x = vars->char_pos.x;
+	vect.y = vars->char_pos.y;
+	draw_line(vars, m_map, vect, map_args);
+	map_args.color = 0xFF0000;
+	draw_circle(m_map, vect, 5, map_args);
+}
+
+void	scale_map2(t_global *vars, t_image *m_map, float scale)
+{
+	int		y;
+	int		x;
+	t_map	map;
+	t_map	map2;
+
+	map.scale = scale;
+	map2.scale = scale;
+	map.color = create_trgb(0, 132, 128, 128);
+	map2.color = create_trgb(0, 53, 48, 48);
+	y = -1;
+	while (++y < vars->map_rows)
 	{
-		my_mlx_pixel_put(m_map, (x * scale) + (dx * to_x),
-			(y * scale) + (dx * to_y), color);
-		dx += 0.25;
+		x = -1;
+		while (++x < vars->map_columns)
+		{
+			if (vars->map[y][x] != '0' && vars->map[y][x] != '1')
+				draw_scaled_pixel(m_map, x, y, map);
+			if (vars->map[y][x] == '0')
+				draw_scaled_pixel(m_map, x, y, map);
+			else if (vars->map[y][x] == '1')
+				draw_scaled_pixel(m_map, x, y, map2);
+		}
 	}
 }
 
 void	scale_map(t_global *vars, t_image *m_map, int map_width)
 {
-	int		colors[2];
 	float	scale;
-	int		y;
-	int		x;
 
-	colors[0] = create_trgb(0, 132, 128, 128);
-	colors[1] = create_trgb(0, 53, 48, 48);
 	scale = vars->map_columns * 10 / map_width;
-	y = -1;
-	while (vars->map[++y])
-	{
-		x = -1;
-		while (vars->map[y][++x])
-		{
-			if (vars->map[y][x] != '0' && vars->map[y][x] != '1')
-				draw_scaled_pixel(m_map, x, y, scale, colors[0]);
-			if (vars->map[y][x] == '0')
-				draw_scaled_pixel(m_map, x, y, scale, colors[0]);
-			else if (vars->map[y][x] == '1')
-				draw_scaled_pixel(m_map, x, y, scale, colors[1]);
-		}
-	}
-	draw_line(vars, m_map, vars->char_pos.x, vars->char_pos.y, scale, 0x0000FF);
-	draw_circle(m_map, vars->char_pos.x, vars->char_pos.y, 5, scale, 0xFF0000);
+	scale_map2(vars, m_map, scale);
+	draw_player(vars, m_map, map_width);
 }

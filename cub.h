@@ -58,6 +58,11 @@ typedef struct s_vector{
 	float	y;
 }	t_vect;
 
+typedef struct s_map{
+	float	scale;
+	float	color;
+}	t_map;
+
 typedef struct s_global{
 	void	*mlx;
 	void	*win;
@@ -88,7 +93,7 @@ typedef struct s_wall_rend{
 	int		column;
 	int		size;
 	int		position[2];
-	t_image *img_dst;
+	t_image	*img_dst;
 	t_image	*n_wall;
 }	t_wall_rend;
 
@@ -111,7 +116,13 @@ float	vec_angle(t_vect base, t_vect other);
 int		check_args(int argc, char *file);
 int		check_map(char *file);
 void	get_map(t_global *vars, char *file);
-int		check_borders(char **matrix);
+int		check_borders(char *file);
+void	get_textures(t_global *vars, int fd);
+int		check_borders2(char **matrix, size_t columns, int rows);
+int		ft_strichr_sp(const char *s, int c, int len);
+int		check_diff_chars(char **matrix, size_t columns, int rows);
+void	get_colors(t_global *vars, int fd);
+int		are_colors(int fd);
 
 /* start map */
 int		start_map(t_global *vars, char *argv);
@@ -132,11 +143,9 @@ void	draw_background(t_global *vars, t_image *img);
 int		put_minimap(t_global *vars);
 int		put_map(t_global *vars);
 void	scale_map(t_global *vars, t_image *m_map, int map_width);
-void	draw_line(t_global *vars, t_image *m_map,
-			float x, float y, float scale, int color);
-void	draw_scaled_pixel(t_image *m_map, int x, int y, float scale, int color);
-void	draw_circle(t_image *m_map, float centerX,
-			float centerY, int radius, float scale, int color);
+void	draw_line(t_global *vars, t_image *m_map, t_vect vect, t_map map);
+void	draw_scaled_pixel(t_image *m_map, int x, int y, t_map map);
+void	draw_circle(t_image *m_map, t_vect vect, int radius, t_map map);
 
 /* key hook */
 int		game_loop(void *param);

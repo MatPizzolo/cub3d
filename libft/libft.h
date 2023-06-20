@@ -6,7 +6,7 @@
 /*   By: mpizzolo <mpizzolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:59:17 by mpizzolo          #+#    #+#             */
-/*   Updated: 2023/01/26 22:25:21 by mpizzolo         ###   ########.fr       */
+/*   Updated: 2023/06/20 20:48:33 by mpizzolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,5 +110,7 @@ void			ft_striteri(char *s, void (*f)(unsigned int, char*));
 char			**ft_split(char const *s, char c);
 
 t_list			*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void*));
+
+int				ft_strichr(const char *s, int c, int len);
 
 #endif

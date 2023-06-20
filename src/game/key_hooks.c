@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_hooks.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amejia <amejia@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mpizzolo <mpizzolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:20:23 by amejia            #+#    #+#             */
-/*   Updated: 2023/06/19 23:20:25 by amejia           ###   ########.fr       */
+/*   Updated: 2023/06/20 21:00:41 by mpizzolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	mouse_move(t_global *vars)
 	y = 0;
 	mlx_mouse_hide();
 	res = mlx_mouse_get_pos(vars->win, &x, &y);
-	if (x - vars->mouse_pos.x > 100 || vars->mouse_pos.x - x > 100)
+	if (x - vars->mouse_pos.x > 50 || vars->mouse_pos.x - x > 50)
 	{	
-		if (x - vars->mouse_pos.x > 100)
+		if (x - vars->mouse_pos.x > 50)
 			move_view(1, vars);
 		else
 			move_view(2, vars);

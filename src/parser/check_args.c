@@ -6,7 +6,7 @@
 /*   By: mpizzolo <mpizzolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 20:55:16 by mpizzolo          #+#    #+#             */
-/*   Updated: 2023/06/14 03:41:30 by mpizzolo         ###   ########.fr       */
+/*   Updated: 2023/06/20 16:39:17 by mpizzolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ int	check_extention(char *file)
 	if (file[len - 1] != 'b' || file[len - 2] != 'u'
 		|| file[len - 3] != 'c' || file[len - 4] != '.')
 	{
-		printf("Invalid extension\n");
+		printf("Error\nInvalid extension\n");
 		return (0);
 	}
 	if (open(file, O_RDONLY) == -1)
 	{
-		printf("Couldn`t open file\n");
+		printf("Error\nCouldn`t open file\n");
 		return (0);
 	}
 	return (1);
@@ -35,7 +35,7 @@ int	check_args(int argc, char *file)
 {
 	if (argc != 2)
 	{
-		printf("Program takes as a first argument a scene description file\n");
+		printf("Error\nInvalid arguments\n");
 		return (0);
 	}
 	if (!check_extention(file))

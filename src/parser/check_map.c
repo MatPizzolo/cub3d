@@ -6,7 +6,7 @@
 /*   By: mpizzolo <mpizzolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 20:55:18 by mpizzolo          #+#    #+#             */
-/*   Updated: 2023/06/14 03:41:43 by mpizzolo         ###   ########.fr       */
+/*   Updated: 2023/06/20 21:55:07 by mpizzolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ int	check_texture(int fd, char *texture)
 	tmp_free = ft_substr(line, 0, 2);
 	if (ft_strncmp(texture, tmp_free, 2))
 	{
-		printf("%s, texture not found\n", texture);
+		printf("Error\n%s, texture not found\n", texture);
 		return (0);
 	}
 	free(tmp_free);
-	// tmp_free = ft_strtrim((line + 3), "\n");
-	// if (open(tmp_free, O_RDONLY) == -1)
-	// 	return (0);
-	// free(tmp_free);
+	tmp_free = ft_strtrim((line + 3), "\n");
+	if (open(tmp_free, O_RDONLY) == -1)
+		return (0);
+	free(tmp_free);
 	return (1);
 }
 
@@ -45,29 +45,29 @@ int	are_textures(int fd)
 	return (1);
 }
 
-int	are_colors(int fd)
-{
-	char	*line;
-
-	line = get_next_line(fd);
-	line = get_next_line(fd);
-	if (line[0] != 'F')
-	{
-		printf("Floor color not found\n");
-		return (0);
-	}
-	line = get_next_line(fd);
-	if (line[0] != 'C')
-	{
-		printf("Ceiling color not found\n");
-		return (0);
-	}
-	return (1);
-}
-
 int	one_player(int fd)
 {
-	fd += 0;
+	int		player;
+	int		i;
+	char	*line;
+
+	player = 0;
+	line = get_next_line(fd);
+	while (line && ft_strichr_sp(line, '1', 1) == 0)
+		line = get_next_line(fd);
+	while (line)
+	{
+		i = -1;
+		while (line[++i])
+		{
+			if (line[i] == 'N' || line[i] == 'S'
+				|| line[i] == 'W' || line[i] == 'E')
+				player++;
+		}
+		line = get_next_line(fd);
+	}
+	if (player > 1 || player == 0)
+		return (printf("Error\nMore than one player or none\n"), 0);
 	return (1);
 }
 
@@ -77,11 +77,16 @@ int	check_map(char *file)
 
 	fd = open(file, O_RDONLY);
 	if (!are_textures(fd))
+	{
+		printf("Error\nTexture not found\n");
 		return (0);
+	}
 	if (!are_colors(fd))
 		return (0);
 	if (!one_player(fd))
 		return (0);
 	close(fd);
+	if (!check_borders(file))
+		return (0);
 	return (1);
 }

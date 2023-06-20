@@ -17,7 +17,10 @@ SRCS = ./gnl/get_next_line.c ./gnl/get_next_line_utils.c \
 	$(SRCS_DIR)/game/render_walls.c $(SRCS_DIR)/game/moves_player.c \
 	$(SRCS_DIR)/game/ray_caster.c $(SRCS_DIR)/game/ray_caster2.c\
 	$(SRCS_DIR)/vector_math/distances.c $(SRCS_DIR)/vector_math/distances_2.c \
-	$(SRCS_DIR)/vector_math/rotation.c $(SRCS_DIR)/game/game_loop.c 
+	$(SRCS_DIR)/vector_math/rotation.c $(SRCS_DIR)/game/game_loop.c  \
+	$(SRCS_DIR)/game/minimap/minimap-utils2.c $(SRCS_DIR)/parser/get_textures.c \
+	$(SRCS_DIR)/parser/check_borders.c $(SRCS_DIR)/parser/check_borders2.c \
+	$(SRCS_DIR)/parser/get_colors.c $(SRCS_DIR)/parser/check_colors.c 
 
 
 OBJS = ${SRCS:.c=.o}

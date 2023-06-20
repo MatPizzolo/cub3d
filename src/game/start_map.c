@@ -1,20 +1,6 @@
 
 #include "../../cub.h"
 
-// hay que  hacerlo de manera distinta
-// la funcion put_tile esta comentada en mlx_utils.c
-// int	put_walls(t_global *vars)
-// {
-// 	int size[2];
-// 	int pos[2];
-// 	pos[0] = (int)SIZE_X/2;
-// 	pos[1] = (int)SIZE_Y/2;
-// 	size[0] = 2000;
-// 	size[1] = 2000;
-// 	put_tile(vars, pos, size);
-// 	return (1);
-// }
-
 void	start_keys(t_global *vars)
 {
 	vars->keys = (t_keys *)malloc(sizeof(t_keys));
