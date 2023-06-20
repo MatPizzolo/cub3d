@@ -159,5 +159,8 @@ void	mega_wall_render(t_global *vars, t_image *img);
 void	render_wall_col_setup(t_global *vars, int *ct, t_image *img, 
 	t_vect intersect);
 t_vect	calc_ray_intersect(t_global *vars, int hor_pix, int *x_y);
+t_image	*texture_selector(t_global *vars, t_vect intersect, int x_y);
+int	check_y_quality(t_global *vars, t_vect *posib, int *it);
+int	check_x_quality(t_global *vars, t_vect *posib, int *it);
 
 #endif

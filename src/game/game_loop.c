@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   game_loop.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amejia <amejia@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/19 23:20:06 by amejia            #+#    #+#             */
+/*   Updated: 2023/06/19 23:20:09 by amejia           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../cub.h"
 
 int	game_loop(void *param)
 {
 	t_global	*vars;
-    t_image		img;
+	t_image		img;
 
 	vars = (t_global *)param;
 	img.img = mlx_new_image(vars->mlx, SIZE_X, SIZE_Y);
