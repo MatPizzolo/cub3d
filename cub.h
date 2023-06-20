@@ -13,9 +13,9 @@
 # define KH_LK 123
 # define KH_RK 124
 # define KH_SPACE 49
-# define FOV 3.141592653589793238/4
+# define FOV 3.141592653589793238/8
 # define SIZEC 300
-# define D_TO_SCREEN 2317.64502 // SIZE_X /2 / tanf(FOV/2)
+# define D_TO_SCREEN 4826.25 // SIZE_X /2 / tanf(FOV/2)
 
 # include "./gnl/get_next_line.h"
 # include "./libft/libft.h"

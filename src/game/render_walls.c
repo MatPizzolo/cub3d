@@ -6,7 +6,7 @@
 /*   By: amejia <amejia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:26:27 by amejia            #+#    #+#             */
-/*   Updated: 2023/06/19 23:26:29 by amejia           ###   ########.fr       */
+/*   Updated: 2023/06/21 00:40:18 by amejia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	render_wall_col(t_global *vars, t_wall_rend *p)
 	int		y;
 	float	ratio;
 
+	printf("pix: %d, col:%d wall;%p\n",p->position[0], p->column, p->n_wall);
 	ratio = (float)p->n_wall->height / p->size;
 	y = 0;
 	while (y < p->size)
@@ -65,6 +66,7 @@ void	render_wall_col(t_global *vars, t_wall_rend *p)
 }
 
 // ct is ct[0], x_y es ct[1], por is ct[2], pos[0] is ct[3], pos[1] is ct[4]
+
 void	mega_wall_render(t_global *vars, t_image *img)
 {
 	int		ct[5];
@@ -80,9 +82,9 @@ void	mega_wall_render(t_global *vars, t_image *img)
 			ct[4] = SIZE_Y / 2 - 500 / (dist_vec(vars->char_pos,
 						intersect) + 0.1);
 			if (ct[1] == 0)
-				ct[2] = (int)(50 * fmodf(intersect.x, 1.0f));
+				ct[2] = (int)(50 * (intersect.y - floorf(intersect.y)));
 			else if (ct[1] == 1)
-				ct[2] = (int)(50 * fmodf(intersect.y, 1.0f));
+				ct[2] = (int)(50 * (intersect.x - floorf(intersect.x)));
 			if (ct[1] != -1)
 				render_wall_col_setup(vars, ct, img, intersect);
 		}
