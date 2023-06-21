@@ -6,7 +6,7 @@
 /*   By: mpizzolo <mpizzolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 20:55:16 by mpizzolo          #+#    #+#             */
-/*   Updated: 2023/06/20 16:39:17 by mpizzolo         ###   ########.fr       */
+/*   Updated: 2023/06/21 17:02:50 by mpizzolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	check_extention(char *file)
 {
 	int	len;
+	int	fd;
 
 	len = ft_strlen(file);
 	if (file[len - 1] != 'b' || file[len - 2] != 'u'
@@ -23,11 +24,13 @@ int	check_extention(char *file)
 		printf("Error\nInvalid extension\n");
 		return (0);
 	}
-	if (open(file, O_RDONLY) == -1)
+	fd = open(file, O_RDONLY);
+	if (fd == -1)
 	{
 		printf("Error\nCouldn`t open file\n");
 		return (0);
 	}
+	close(fd);
 	return (1);
 }
 
