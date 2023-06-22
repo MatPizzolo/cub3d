@@ -1,5 +1,4 @@
 NAME = cub3D
-NAME_DEBUG = cub_debug
 
 SRCS_DIR = ./src
 GNL_DIR = ./gnl
@@ -28,7 +27,6 @@ OBJS = ${SRCS:.c=.o}
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-#CFLAGS = -Wall -Wextra -g3 -fsanitize=address
 
 MLX = $(MLX_DIR)/libmlx.a
 
@@ -39,13 +37,6 @@ make_libft:
 
 make_mlx:
 	make all -C $(MLX_DIR)
-
-debug: make_libft make_mlx $(NAME_DEBUG)
-
-VS_debug: make_libft make_mlx $(NAME_DEBUG)
-
-$(NAME_DEBUG): $(LIBFT_DIR)/libft.a $(SRCS) $(MLX)
-	$(CC) $(CFLAGS) $(SRCS) -L$(MLX_DIR) -lmlx $(MLX_FLAGS) $(LIBFT_DIR)/libft.a -o $@
 
 $(NAME): $(OBJS) $(LIBFT_DIR)/libft.a $(MLX)
 	$(CC) $(CFLAGS) $(OBJS) -I$(LIBFT_DIR) -I$(MLX_DIR) $(LIBFT_DIR)/libft.a $(MLX) $(MLX_FLAGS) -o $(NAME)
@@ -60,10 +51,9 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
-	rm -f $(NAME_DEBUG)
 	make fclean -C $(LIBFT_DIR)
 	make clean -C $(MLX_DIR)
 
 re: fclean all
 
-.PHONY: all clean fclean re debug VS_debug
+.PHONY: all clean fclean re 
