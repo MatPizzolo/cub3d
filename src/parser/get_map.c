@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_map.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mpizzolo <mpizzolo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/22 16:23:06 by mpizzolo          #+#    #+#             */
+/*   Updated: 2023/06/22 16:23:08 by mpizzolo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../cub.h"
 
@@ -21,23 +32,24 @@ void	read_map_lines(t_global *vars, size_t bggst_line, int rows, char *file)
 	int		x;
 	int		fd;
 	char	*line;
+	char	*tmp;
 
 	i = -1;
-	fd = open(file, O_RDONLY);
-	line = get_next_line(fd);
-	while (line && ft_strichr_sp(line, '1', 1) == 0)
-		line = get_next_line(fd);
+	line = get_first_line_map(file, &fd);
 	i = 0;
 	while (line && i < rows)
 	{
 		if (line == NULL)
 			break ;
+		tmp = line;
 		line = ft_strtrim(line, "\n");
+		free(tmp);
 		x = -1;
 		while (line[++x] && line[x] != '\n')
 			vars->map[i][x] = line[x];
 		put_ones_on_str(vars->map[i], bggst_line);
 		i++;
+		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);
@@ -66,25 +78,23 @@ void	get_map(t_global *vars, char *file)
 	char	*line;
 	int		i;
 	size_t	biggest_line_len;
+	char	*tmp;
 
 	fd = open(file, O_RDONLY);
-	get_textures(vars, fd);
-	get_colors(vars, fd);
+	get_text_colors(fd, vars);
+	close(fd);
 	i = 0;
 	biggest_line_len = 0;
-	line = get_next_line(fd);
-	while (line && ft_strichr_sp(line, '1', 1) == 0)
-		line = get_next_line(fd);
+	line = get_first_line_map(file, &fd);
 	while (line)
 	{
+		tmp = line;
 		line = ft_strtrim(line, "\n");
+		free(tmp);
 		if (ft_strlen(line) > biggest_line_len)
 			biggest_line_len = ft_strlen(line);
-		if (line != NULL)
-		{	
-			free(line);
-			i++;
-		}
+		i++;
+		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);

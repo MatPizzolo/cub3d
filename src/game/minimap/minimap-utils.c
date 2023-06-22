@@ -6,7 +6,7 @@
 /*   By: mpizzolo <mpizzolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 00:14:17 by mpizzolo          #+#    #+#             */
-/*   Updated: 2023/06/20 22:00:57 by mpizzolo         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:22:21 by mpizzolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	draw_scaled_pixel(t_image *m_map, int x, int y, t_map map)
 		dx = 0;
 		while (dx < map.scale)
 		{
-			my_mlx_pixel_put(m_map, x * map.scale + dx, y * map.scale + dy, map.color);
+			my_mlx_pixel_put(m_map, x * map.scale + dx,
+				y * map.scale + dy, map.color);
 			dx++;
 		}
 		dy++;
@@ -33,7 +34,6 @@ void	draw_scaled_pixel(t_image *m_map, int x, int y, t_map map)
 void	draw_player(t_global *vars, t_image *m_map, int map_width)
 {
 	t_vect	vect;
-	float	scale;
 	t_map	map_args;
 
 	map_args.scale = vars->map_columns * 10 / map_width;

@@ -20,14 +20,15 @@ SRCS = ./gnl/get_next_line.c ./gnl/get_next_line_utils.c \
 	$(SRCS_DIR)/vector_math/rotation.c $(SRCS_DIR)/game/game_loop.c  \
 	$(SRCS_DIR)/game/minimap/minimap-utils2.c $(SRCS_DIR)/parser/get_textures.c \
 	$(SRCS_DIR)/parser/check_borders.c $(SRCS_DIR)/parser/check_borders2.c \
-	$(SRCS_DIR)/parser/get_colors.c $(SRCS_DIR)/parser/check_colors.c 
+	$(SRCS_DIR)/parser/check_map2.c $(SRCS_DIR)/parser/check_colors.c \
+	$(SRCS_DIR)/parser/get_map2.c $(SRCS_DIR)/parser/check_borders3.c
 
 
 OBJS = ${SRCS:.c=.o}
 
 CC = gcc
-CFLAGS = -g3 -fsanitize=address#-Wall -Wextra -g3 # #-Werror
-#CFLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror
+#CFLAGS = -Wall -Wextra -g3 -fsanitize=address
 
 MLX = $(MLX_DIR)/libmlx.a
 

@@ -6,47 +6,56 @@
 /*   By: mpizzolo <mpizzolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:34:26 by mpizzolo          #+#    #+#             */
-/*   Updated: 2023/06/20 22:18:32 by mpizzolo         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:22:46 by mpizzolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub.h"
 
-void	put_ones(char *str, size_t len)
+void	put_ones_mtx(char **mtx, size_t len)
 {
-	size_t	i;
+	size_t	x;
+	int		y;
+	char	*str;
 
-	i = -1;
-	while (++i < len)
+	y = -1;
+	while (mtx[++y])
 	{
-		if (str[i] == ' ')
-			str[i] = '1';
+		str = mtx[y];
+		x = -1;
+		while (++x < len)
+		{
+			if (str[x] != '0')
+				str[x] = '1';
+		}
+		str[x] = '\0';
 	}
-	str[i] = '\0';
 }
 
-void	read_lines(char **matrix, size_t bggst_line, int rows, char *file)
+void	read_lines(char **matrix, size_t bggst_line, char *file)
 {
 	int		i;
 	int		x;
 	int		fd;
 	char	*line;
+	char	*tmp;
 
-	i = -1;
-	fd = open(file, O_RDONLY);
-	while (line && ft_strichr_sp(line, '1', 1) == 0)
-		line = get_next_line(fd);
+	line = get_first_line_map(file, &fd);
 	i = 0;
-	while (line && i < rows)
+	while (line)
 	{
 		if (line == NULL)
 			break ;
+		tmp = line;
 		line = ft_strtrim(line, "\n");
+		free(tmp);
 		x = -1;
 		while (line[++x] && line[x] != '\n')
 			matrix[i][x] = line[x];
-		put_ones(matrix[i], bggst_line);
+		matrix[i][x] = '\0';
+		bggst_line += 0;
 		i++;
+		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);
@@ -64,7 +73,7 @@ void	get_matrix(char ***matrix, size_t columns, int rows, char *file)
 		i++;
 	}
 	(*matrix)[rows] = NULL;
-	read_lines(*matrix, columns, rows, file);
+	read_lines(*matrix, columns, file);
 }
 
 size_t	get_biggest_line(char *file, int *rows)
@@ -72,17 +81,16 @@ size_t	get_biggest_line(char *file, int *rows)
 	size_t	biggest_line_len;
 	char	*line;
 	int		fd;
+	char	*tmp;
 
-	fd = open(file, O_RDONLY);
-	line = get_next_line(fd);
-	while (ft_strichr_sp(line, '0', 1) == 0 && ft_strichr_sp(line, '1', 1) == 0)
-		line = get_next_line(fd);
-	*rows = 1;
+	line = get_first_line_map(file, &fd);
+	*rows = 0;
 	biggest_line_len = 0;
 	while (line)
 	{
-		line = get_next_line(fd);
+		tmp = line;
 		line = ft_strtrim(line, "\n");
+		free(tmp);
 		if (ft_strlen(line) > biggest_line_len)
 			biggest_line_len = ft_strlen(line);
 		if (line != NULL)
@@ -90,6 +98,7 @@ size_t	get_biggest_line(char *file, int *rows)
 			free(line);
 			*rows += 1;
 		}
+		line = get_next_line(fd);
 	}
 	close(fd);
 	return (biggest_line_len);
@@ -103,15 +112,21 @@ int	check_borders(char *file)
 
 	columns = get_biggest_line(file, &rows);
 	get_matrix(&matrix, columns, rows, file);
+	if (!check_diff_chars(matrix))
+	{
+		printf("Error\nA non valid char is present\n");
+		return (ft_free_split(matrix), 0);
+	}
 	if (!check_borders2(matrix, columns, rows))
 	{
 		printf("Error\nWalls not placed correctly\n");
-		return (0);
+		return (ft_free_split(matrix), 0);
 	}
-	if (!check_diff_chars(matrix, columns, rows))
+	put_ones_mtx(matrix, columns);
+	if (!check_borders_a(matrix, columns, rows))
 	{
-		printf("Error\nA non valid char is present\n");
-		return (0);
+		printf("Error\nWalls not placed correctly\n");
+		return (ft_free_split(matrix), 0);
 	}
-	return (1);
+	return (ft_free_split(matrix), 1);
 }

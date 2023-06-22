@@ -6,48 +6,46 @@
 /*   By: mpizzolo <mpizzolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 21:34:48 by mpizzolo          #+#    #+#             */
-/*   Updated: 2023/06/20 21:51:26 by mpizzolo         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:14:09 by mpizzolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub.h"
 
-int	are_colors(int fd)
+int	check_color(char *line)
 {
-	char	*line;
-	int		x;
+	char	**colors;
+	int		i;
+	int		res;
 
-	x = 0;
-	line = get_next_line(fd);
-	while (line)
+	res = 1;
+	i = 0;
+	line += 2;
+	colors = ft_split(line, ',');
+	while (i < 3)
 	{
-		if (line[0] == 'F')
-		{
-			x = 1;
-			break ;
-		}
-		if (line[0] == 'C')
-		{
-			x = -1;
-			break ;
-		}
-		line = get_next_line(fd);
+		if (ft_atoi(colors[i]) < 0 || ft_atoi(colors[i]) > 255)
+			res = 0;
+		free(colors[i]);
+		i++;
 	}
-	if (line == NULL)
-		printf("Error\nNo colors found\n");
-	line = get_next_line(fd);
-	if (line[0] != 'C' && line[0] != 'F')
+	free(colors);
+	return (res);
+}
+
+int	check_for_colors(char *line, t_parser *pars)
+{
+	if (!ft_strncmp(line, "F", 1))
 	{
-		if (x == 1 && line[0] != 'C')
-			return (printf("Error\nCeiling color not found\n"), 0);
-		if (x == -1 && line[0] != 'F')
-			return (printf("Error\nFloor color not found\n"), 0);
-		if (line[0] == 'F')
-			x += 1;
-		if (line[0] == 'C')
-			x += -1;
+		if (!check_color(line))
+			return (print_msg_checker_map(line));
+		pars->f_color += 1;
 	}
-	if (x < -1 || x > 1)
-		printf("Error\nRepeated color found\n");
+	if (!ft_strncmp(line, "C", 1))
+	{
+		if (!check_color(line))
+			return (print_msg_checker_map(line));
+		pars->c_color += 1;
+	}
 	return (1);
 }

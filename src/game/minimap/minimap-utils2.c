@@ -6,7 +6,7 @@
 /*   By: mpizzolo <mpizzolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:59:34 by mpizzolo          #+#    #+#             */
-/*   Updated: 2023/06/20 16:13:55 by mpizzolo         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:37:06 by mpizzolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,38 +30,41 @@ void	draw_line(t_global *vars, t_image *m_map, t_vect vect, t_map map)
 	}
 }
 
+void	draw_circle_util(t_image *m_map, t_vect cntr, t_vect pos, t_map map)
+{
+	my_mlx_pixel_put(m_map, cntr.x + pos.x, cntr.y + pos.y, map.color);
+	my_mlx_pixel_put(m_map, cntr.x + pos.y, cntr.y + pos.x, map.color);
+	my_mlx_pixel_put(m_map, cntr.x - pos.y, cntr.y + pos.x, map.color);
+	my_mlx_pixel_put(m_map, cntr.x - pos.x, cntr.y + pos.y, map.color);
+	my_mlx_pixel_put(m_map, cntr.x - pos.x, cntr.y - pos.y, map.color);
+	my_mlx_pixel_put(m_map, cntr.x - pos.y, cntr.y - pos.x, map.color);
+	my_mlx_pixel_put(m_map, cntr.x + pos.y, cntr.y - pos.x, map.color);
+	my_mlx_pixel_put(m_map, cntr.x + pos.x, cntr.y - pos.y, map.color);
+}
+
 void	draw_circle(t_image *m_map, t_vect vect, int radius, t_map map)
 {
-	float	scld_cntrx;
-	float	scld_cntr_y;
-	float	x;
-	float	y;
+	t_vect	cntr;
+	t_vect	pos;
 	float	radius_error;
 
-	scld_cntrx = vect.x * map.scale;
-	scld_cntr_y = vect.y * map.scale;
-	x = radius;
-	y = 0;
-	radius_error = 1 - x;
-	while (x >= y)
+	cntr.x = vect.x * map.scale;
+	cntr.y = vect.y * map.scale;
+	pos.x = radius;
+	pos.y = 0;
+	radius_error = 1 - pos.x;
+	while (pos.x >= pos.y)
 	{
-		my_mlx_pixel_put(m_map, scld_cntrx + x, scld_cntr_y + y, map.color);
-		my_mlx_pixel_put(m_map, scld_cntrx + y, scld_cntr_y + x, map.color);
-		my_mlx_pixel_put(m_map, scld_cntrx - y, scld_cntr_y + x, map.color);
-		my_mlx_pixel_put(m_map, scld_cntrx - x, scld_cntr_y + y, map.color);
-		my_mlx_pixel_put(m_map, scld_cntrx - x, scld_cntr_y - y, map.color);
-		my_mlx_pixel_put(m_map, scld_cntrx - y, scld_cntr_y - x, map.color);
-		my_mlx_pixel_put(m_map, scld_cntrx + y, scld_cntr_y - x, map.color);
-		my_mlx_pixel_put(m_map, scld_cntrx + x, scld_cntr_y - y, map.color);
-		y++;
+		draw_circle_util(m_map, cntr, pos, map);
+		pos.y++;
 		if (radius_error < 0)
 		{
-			radius_error += 2 * y + 1;
+			radius_error += 2 * pos.y + 1;
 		}
 		else
 		{
-			x--;
-			radius_error += 2 * (y - x + 1);
+			pos.x--;
+			radius_error += 2 * (pos.y - pos.x + 1);
 		}
 	}
 }

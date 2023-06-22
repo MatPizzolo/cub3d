@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_caster2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amejia <amejia@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mpizzolo <mpizzolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:25:49 by amejia            #+#    #+#             */
-/*   Updated: 2023/06/19 23:26:18 by amejia           ###   ########.fr       */
+/*   Updated: 2023/06/21 19:47:10 by mpizzolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	render_wall_col_setup(t_global *vars, int *ct, t_image *img,
 	p.img_dst = img;
 	p.position[0] = ct[3];
 	p.position[1] = ct[4];
-	p.size = 1000 / (dist_vec(vars->char_pos, intersect) + 0.1);
+	p.size = W_SIZE / (dist_vec(vars->char_pos, intersect) + 0.1);
 	p.n_wall = texture_selector(vars, intersect, ct[1]);
-	render_wall_col(vars, &p);
+	render_wall_col(&p);
 }
 
 int	check_x_quality(t_global *vars, t_vect *posib, int *it)

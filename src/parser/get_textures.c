@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_textures.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mpizzolo <mpizzolo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/21 17:44:30 by mpizzolo          #+#    #+#             */
+/*   Updated: 2023/06/21 20:13:39 by mpizzolo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../cub.h"
 
 void	texture_no(char *line, t_global *vars)
@@ -11,6 +23,7 @@ void	texture_no(char *line, t_global *vars)
 	tmp_no->addr = mlx_get_data_addr(tmp_no->img, &tmp_no->bits_per_pixel,
 			&tmp_no->line_length, &tmp_no->endian);
 	vars->no_texture = tmp_no;
+	free(tmp_no->file);
 }
 
 void	texture_so(char *line, t_global *vars)
@@ -24,6 +37,7 @@ void	texture_so(char *line, t_global *vars)
 	tmp_so->addr = mlx_get_data_addr(tmp_so->img, &tmp_so->bits_per_pixel,
 			&tmp_so->line_length, &tmp_so->endian);
 	vars->so_texture = tmp_so;
+	free(tmp_so->file);
 }
 
 void	texture_we(char *line, t_global *vars)
@@ -37,6 +51,7 @@ void	texture_we(char *line, t_global *vars)
 	tmp_we->addr = mlx_get_data_addr(tmp_we->img, &tmp_we->bits_per_pixel,
 			&tmp_we->line_length, &tmp_we->endian);
 	vars->we_texture = tmp_we;
+	free(tmp_we->file);
 }
 
 void	texture_ea(char *line, t_global *vars)
@@ -50,22 +65,5 @@ void	texture_ea(char *line, t_global *vars)
 	tmp_ea->addr = mlx_get_data_addr(tmp_ea->img, &tmp_ea->bits_per_pixel,
 			&tmp_ea->line_length, &tmp_ea->endian);
 	vars->ea_texture = tmp_ea;
-}
-
-void	get_textures(t_global *vars, int fd)
-{
-	char	*line;
-
-	line = get_next_line(fd);
-	if (line[0] == '\n')
-		line = get_next_line(fd);
-	while (line[0] != 'N')
-		line++;
-	texture_no(line, vars);
-	line = get_next_line(fd);
-	texture_so(line, vars);
-	line = get_next_line(fd);
-	texture_we(line, vars);
-	line = get_next_line(fd);
-	texture_ea(line, vars);
+	free(tmp_ea->file);
 }

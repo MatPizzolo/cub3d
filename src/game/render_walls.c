@@ -6,7 +6,7 @@
 /*   By: mpizzolo <mpizzolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:26:27 by amejia            #+#    #+#             */
-/*   Updated: 2023/06/21 17:16:08 by mpizzolo         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:21:52 by mpizzolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	else_color_asign(t_color *color, t_wall_rend *p, int y, float ratio)
 			*p->n_wall->line_length) + 4 * p->column];
 }
 
-void	render_wall_col(t_global *vars, t_wall_rend *p)
+void	render_wall_col(t_wall_rend *p)
 {
 	t_color	color;
 	int		y;
@@ -76,7 +76,7 @@ void	mega_wall_render(t_global *vars, t_image *img)
 		if (dist_vec(intersect, set_vect(-1, -1)) != 0)
 		{
 			ct[3] = ct[0];
-			ct[4] = SIZE_Y / 2 - 500 / (dist_vec(vars->char_pos,
+			ct[4] = SIZE_Y / 2 - W_SIZE / 2 / (dist_vec(vars->char_pos,
 						intersect) + 0.1);
 			if (ct[1] == 0)
 				ct[2] = (int)(50 * (intersect.y - floorf(intersect.y)));

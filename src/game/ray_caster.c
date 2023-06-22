@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_caster.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amejia <amejia@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mpizzolo <mpizzolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:20:37 by amejia            #+#    #+#             */
-/*   Updated: 2023/06/19 23:24:41 by amejia           ###   ########.fr       */
+/*   Updated: 2023/06/21 19:40:38 by mpizzolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,6 @@ t_vect	choose_best_intersect(t_global *vars, t_vect *posib, int *x_y)
 t_vect	calc_ray_intersect(t_global *vars, int hor_pix, int *x_y)
 {
 	t_vect	posib[3];
-	int		it;
-	int		dir;
 	float	pix_rot;
 
 	if (hor_pix < 960)

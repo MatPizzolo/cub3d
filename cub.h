@@ -13,19 +13,18 @@
 # define KH_LK 123
 # define KH_RK 124
 # define KH_SPACE 49
-# define FOV 3.141592653589793238/8
+# define FOV 0.392699081
 # define SIZEC 300
 # define D_TO_SCREEN 4826.24591 // SIZE_X /2 / tanf(FOV/2)
+# define W_SIZE 3000
 
 # include "./gnl/get_next_line.h"
 # include "./libft/libft.h"
 # include "./mlx/mlx.h"
-// # include "./mlx/mlx_int.h"
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <math.h>
-// # include <mlx.h>
 # include <fcntl.h>
 
 typedef struct s_keys {
@@ -70,7 +69,6 @@ typedef struct s_parser{
 	int		so_texture;
 	int		we_texture;
 	int		ea_texture;
-	int		valid_map;
 }	t_parser;
 
 typedef struct s_global{
@@ -127,16 +125,29 @@ int		check_args(int argc, char *file);
 int		check_map(char *file);
 void	get_map(t_global *vars, char *file);
 int		check_borders(char *file);
-void	get_textures(t_global *vars, int fd);
 int		check_borders2(char **matrix, size_t columns, int rows);
 int		ft_strichr_sp(const char *s, int c, int len);
-int		check_diff_chars(char **matrix, size_t columns, int rows);
-void	get_colors(t_global *vars, int fd);
-int		are_colors(int fd);
+int		check_diff_chars(char **matrix);
+int		check_for_colors(char *line, t_parser *pars);
+void	initialize_pars_struct(t_parser *pars);
+int		check_pars_struct(t_parser pars);
+int		check_map_before(char *line, t_parser *p);
+int		one_player(int fd);
+int		check_color(char *line);
+int		*where_is_p(char **matrix);
+int		check_borders_a(char **matrix, size_t columns, int rows);
+char	*get_first_line_map(char *file, int *fd);
+int		print_msg_checker_map(char *line);
 
 /* start map */
 int		start_map(t_global *vars, char *argv);
 void	get_positions(t_global *vars);
+void	get_text_colors(int fd, t_global *vars);
+void	texture_no(char *line, t_global *vars);
+void	texture_so(char *line, t_global *vars);
+void	texture_we(char *line, t_global *vars);
+void	texture_ea(char *line, t_global *vars);
+
 
 /* key hooks */
 int		initialize_key_hooks(t_global *vars);
@@ -145,6 +156,7 @@ int		initialize_key_hooks(t_global *vars);
 int		close_window(t_global *vars);
 void	my_mlx_pixel_put(t_image *data, int x, int y, int color);
 int		create_trgb(int t, int r, int g, int b);
+void	ft_free_split(char **split);
 
 /* background */
 void	draw_background(t_global *vars, t_image *img);
@@ -173,13 +185,13 @@ void	move_view(int view_to, t_global *vars);
 /* render walls */
 //void    render_wall_col(t_global *vars, int column, int size, int *position, 
 //	t_image *img);
-void	render_wall_col(t_global *vars, t_wall_rend *p);
+void	render_wall_col(t_wall_rend *p);
 void	mega_wall_render(t_global *vars, t_image *img);
-void	render_wall_col_setup(t_global *vars, int *ct, t_image *img, 
-	t_vect intersect);
+void	render_wall_col_setup(t_global *vars, int *ct, t_image *img,
+			t_vect intersect);
 t_vect	calc_ray_intersect(t_global *vars, int hor_pix, int *x_y);
 t_image	*texture_selector(t_global *vars, t_vect intersect, int x_y);
-int	check_y_quality(t_global *vars, t_vect *posib, int *it);
-int	check_x_quality(t_global *vars, t_vect *posib, int *it);
+int		check_y_quality(t_global *vars, t_vect *posib, int *it);
+int		check_x_quality(t_global *vars, t_vect *posib, int *it);
 
 #endif
