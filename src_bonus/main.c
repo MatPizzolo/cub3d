@@ -6,11 +6,11 @@
 /*   By: mpizzolo <mpizzolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 20:55:22 by mpizzolo          #+#    #+#             */
-/*   Updated: 2023/06/22 17:08:05 by mpizzolo         ###   ########.fr       */
+/*   Updated: 2023/06/22 17:09:40 by mpizzolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub.h"
+#include "../cub_bonus.h"
 
 int	main(int argc, char *argv[])
 {

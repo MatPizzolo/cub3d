@@ -6,11 +6,11 @@
 /*   By: mpizzolo <mpizzolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:20:23 by amejia            #+#    #+#             */
-/*   Updated: 2023/06/20 21:00:41 by mpizzolo         ###   ########.fr       */
+/*   Updated: 2023/06/22 17:09:40 by mpizzolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub.h"
+#include "../../cub_bonus.h"
 
 void	mouse_move(t_global *vars)
 {

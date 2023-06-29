@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strichr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpizzolo <mpizzolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/10 20:55:22 by mpizzolo          #+#    #+#             */
-/*   Updated: 2023/06/22 17:08:05 by mpizzolo         ###   ########.fr       */
+/*   Created: 2023/06/20 18:16:30 by mpizzolo          #+#    #+#             */
+/*   Updated: 2023/06/20 20:51:57 by mpizzolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub.h"
+#include "libft.h"
 
-int	main(int argc, char *argv[])
+int	ft_strichr(const char *s, int c, int len)
 {
-	t_global	vars;
+	int	i;
 
-	ft_bzero(&vars, sizeof(vars));
-	if (!check_args(argc, argv[1]))
-		return (1);
-	if (!check_map(argv[1]))
-		return (2);
-	if (!start_map(&vars, argv[1]))
-		return (3);
+	i = 0;
+	while (s[i] && i < len)
+		i++;
+	while (i >= 0)
+	{
+		if (s[i] == (char)c)
+			return (1);
+		i--;
+	}
 	return (0);
 }

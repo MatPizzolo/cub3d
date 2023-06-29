@@ -6,11 +6,11 @@
 /*   By: mpizzolo <mpizzolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:26:27 by amejia            #+#    #+#             */
-/*   Updated: 2023/06/22 16:21:52 by mpizzolo         ###   ########.fr       */
+/*   Updated: 2023/06/22 17:09:40 by mpizzolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub.h"
+#include "../../cub_bonus.h"
 
 void	endian1_color_asign(t_color *color, t_wall_rend *p, int y, float rat)
 {

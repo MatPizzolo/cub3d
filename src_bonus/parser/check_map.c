@@ -6,11 +6,11 @@
 /*   By: amejia <amejia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 20:55:18 by mpizzolo          #+#    #+#             */
-/*   Updated: 2023/06/22 17:46:33 by amejia           ###   ########.fr       */
+/*   Updated: 2023/06/22 17:47:09 by amejia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub.h"
+#include "../../cub_bonus.h"
 
 int	check_texture(char *line)
 {

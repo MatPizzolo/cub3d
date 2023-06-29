@@ -6,11 +6,11 @@
 /*   By: mpizzolo <mpizzolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 21:10:27 by mpizzolo          #+#    #+#             */
-/*   Updated: 2023/06/21 20:38:50 by mpizzolo         ###   ########.fr       */
+/*   Updated: 2023/06/22 17:09:40 by mpizzolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub.h"
+#include "../../cub_bonus.h"
 
 void	my_mlx_pixel_put(t_image *data, int x, int y, int color)
 {

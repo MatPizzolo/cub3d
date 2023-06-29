@@ -6,11 +6,11 @@
 /*   By: mpizzolo <mpizzolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 16:23:06 by mpizzolo          #+#    #+#             */
-/*   Updated: 2023/06/22 16:23:08 by mpizzolo         ###   ########.fr       */
+/*   Updated: 2023/06/22 17:09:40 by mpizzolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub.h"
+#include "../../cub_bonus.h"
 
 void	put_ones_on_str(char *str, size_t len)
 {

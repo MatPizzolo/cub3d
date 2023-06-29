@@ -6,11 +6,11 @@
 /*   By: mpizzolo <mpizzolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 00:14:17 by mpizzolo          #+#    #+#             */
-/*   Updated: 2023/06/22 16:22:21 by mpizzolo         ###   ########.fr       */
+/*   Updated: 2023/06/22 17:09:40 by mpizzolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../cub.h"
+#include "../../../cub_bonus.h"
 
 void	draw_scaled_pixel(t_image *m_map, int x, int y, t_map map)
 {

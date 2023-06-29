@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpizzolo <mpizzolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/10 20:55:22 by mpizzolo          #+#    #+#             */
-/*   Updated: 2023/06/22 17:08:05 by mpizzolo         ###   ########.fr       */
+/*   Created: 2023/06/11 17:05:21 by mpizzolo          #+#    #+#             */
+/*   Updated: 2023/06/22 17:09:40 by mpizzolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub.h"
+#include "../../../cub_bonus.h"
 
-int	main(int argc, char *argv[])
+int	put_map(t_global *vars)
 {
-	t_global	vars;
+	t_image	m_map;
 
-	ft_bzero(&vars, sizeof(vars));
-	if (!check_args(argc, argv[1]))
-		return (1);
-	if (!check_map(argv[1]))
-		return (2);
-	if (!start_map(&vars, argv[1]))
-		return (3);
-	return (0);
+	m_map.img = mlx_new_image(vars->mlx, vars->map_columns * 10,
+			vars->map_rows * 10);
+	m_map.addr = mlx_get_data_addr(m_map.img, &m_map.bits_per_pixel,
+			&m_map.line_length, &m_map.endian);
+	scale_map(vars, &m_map, vars->map_columns);
+	mlx_put_image_to_window(vars->mlx, vars->win, m_map.img, 0, 0);
+	return (1);
 }
