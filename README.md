@@ -6,12 +6,7 @@ The objective was to make a dynamic view inside a maze, in which you'll have to 
 
 ![screen](cub.gif)
 
-## Compilation && Execution
-
-To play the game
-```
-make && ./cub3D maps/git.cub
-```
+[Subject](en.subject.pdf)
 
 ## Instructions
 
