@@ -21,3 +21,20 @@ make && ./cub3D maps/git.cub
 * ```ESC``` to quit
 
 
+## Installation & Usage
+
+Clone this repository to your computer:
+```sh
+git clone https://github.com/MatPizzolo/cub3d.git
+```
+
+First compile and install library
+```sh
+make
+```
+
+Run the game with a specific map file as argument.
+```
+./cub3D maps/git.cub
+```
+
