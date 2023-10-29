@@ -33,3 +33,9 @@ Run the game with a specific map file as argument.
 ./cub3D maps/git.cub
 ```
 
+<br/>
+<br/>
+
+### Credits
+This program was made with [@andresmejiaro](https://github.com/andresmejiaro)
+
